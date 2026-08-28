@@ -81,7 +81,7 @@ Steps:
       example: Quran Arabic - 007-015 Ghamadi Verse by Verse
 
       Audio Repetitions 1x (2x, 3x, 4x are for anki audiobooks)
-      Bitrate 32 kpbs (since recitations aren't purely speak)
+      Bitrate 32 kpbs (since recitations are not purely speak)
 
       check 'Use filename as chaptername' so surah 2 ayah 5 is 002005 rather 4 digits
       uncheck Sample Mode (50 entries)

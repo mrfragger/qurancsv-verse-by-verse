@@ -1,76 +1,67 @@
-```bash
-Quran csv verse-by-verse
+# Quran csv verse-by-verse
 
 Convert Quran with audio for each ayah from either everyahah.com or quranenc.com
 with subtitles using 82 csv translations.  The csv references the surah and ayah 
 of each audio which corresponds with the audio of each audio mp3.  
 
-Like 002255 references surah 2 ayah 255 for instance. Subtitles can pretty much be 80 characters 
-long otherwise subs get super small so the ayah needs to be intelligently divided up with up to 
-6 breaks depending on character length of ayah.  This is done super fast but for Japanese, Thai 
-and Khmer it needs to tokenize each word so it knows where to make the breakpoint rather than 
-breaking in the middle of a word.
+Like 002255 references surah 2 ayah 255 for instance. Subtitles can pretty much be 80 characters long otherwise subs get super small so the ayah needs to be intelligently divided up with up to 6 breaks depending on character length of ayah.  This is done super fast but for Japanese, Thai and Khmer it needs to tokenize each word so it knows where to make the breakpoint rather than breaking in the middle of a word.
 
 download.py and files.json is for downloading audio using api of quranenc.com
 duration_report.sh is used to gather duration of audiobooks like so
 
-17h 54m Assamese - (Rafeeq)
-19h 07m Chinese - (Suleiman)
-18h 27m Dutch - (Rowwad)
-13h 13m English - (Rowwad)
-14h 30m French - (Rashid)
-25h 26m Persian - (Rowwad)
-14h 47m Portuguese - (Nasr)
-28h 08m Sinhalese - (Rowwad)
-20h 25m Somali - (Yaqoub)
-24h 05m Tagalog - (Rowwad)
-19h 25m Vietnamese - (Rowwad)
+- 17h 54m Assamese - (Rafeeq)
+- 19h 07m Chinese - (Suleiman)
+- 18h 27m Dutch - (Rowwad)
+- 13h 13m English - (Rowwad)
+- 14h 30m French - (Rashid)
+- 25h 26m Persian - (Rowwad)
+- 14h 47m Portuguese - (Nasr)
+- 28h 08m Sinhalese - (Rowwad)
+- 20h 25m Somali - (Yaqoub)
+- 24h 05m Tagalog - (Rowwad)
+- 19h 25m Vietnamese - (Rowwad)
 
-versebyversequran.zip 
-contains 82 csv translations from quranenc.com as well as the 7 split csv files 
-of the English Sahih International translation.
-quran_saheeh001-006.csv
-quran_saheeh007-015.csv
-quran_saheeh016-024.csv
-quran_saheeh025-036.csv
-quran_saheeh037-049.csv
-quran_saheeh050-069.csv
-quran_saheeh070-114.csv
+versebyversequran.zip 36 MB unzips to ~ 139 MB
 
-These are then processed for the timings of the quran audiobooks.  
-Does not matter which language as long as their is an official quran translation 
-for it in csv then the default English can be overwritten to whichever language.
+contains 82 csv translations from quranenc.com as well as the 7 split csv files of the English Sahih International translation.
+- quran_saheeh001-006.csv
+- quran_saheeh007-015.csv
+- quran_saheeh016-024.csv
+- quran_saheeh025-036.csv
+- quran_saheeh037-049.csv
+- quran_saheeh050-069.csv
+- quran_saheeh070-114.csv
+
+These are then processed for the timings of the quran audiobooks.  Does not matter which language as long as their is an official quran translation for it in csv then the default English can be overwritten to whichever language.
 
 
-╔══════════════════════════════════════════════════════════════╗
 ║                    zqurancsv.py                              ║
 ║          Combined Quran CSV Processing Pipeline              ║
-╚══════════════════════════════════════════════════════════════╝
 
 Steps:
-  A. Organize mp3 media into range subdirectories like so:
-      quran_saheeh001-006_media
-      quran_saheeh007-015_media
-      quran_saheeh016-024_media
-      quran_saheeh025-036_media
-      quran_saheeh037-049_media
-      quran_saheeh050-069_media
-      quran_saheeh070-114_media
-      This can be done automatically by putting all mp3 into a subdir named quranversebyverse 
-      then choosing 3. Organize mp3 media into range subdirectories
+A. Organize mp3 media into range subdirectories like so:
+      - quran_saheeh001-006_media
+      - quran_saheeh001-006_media
+      - quran_saheeh007-015_media
+      - quran_saheeh016-024_media
+      - quran_saheeh025-036_media
+      - quran_saheeh037-049_media
+      - quran_saheeh050-069_media
+      - quran_saheeh070-114_media
+      This can be done automatically by putting all mp3 into a subdir named quranversebyverse then choosing 3. Organize mp3 media into range subdirectories
 
-      === Organize MP3 media files into range subdirectories ===
+=== Organize MP3 media files into range subdirectories ===
 
-        Moved 6236 mp3 files into range subdirectories.
-        Left 112 bismillah file(s) (ayah 000) in place, not moved.
-          quran_saheeh001-006_media/: 954 files
-          quran_saheeh007-015_media/: 947 files
-          quran_saheeh016-024_media/: 954 files
-          quran_saheeh025-036_media/: 933 files
-          quran_saheeh037-049_media/: 842 files
-          quran_saheeh050-069_media/: 745 files
-          quran_saheeh070-114_media/: 861 files
-          (which totals 6236 ayahs)
+Moved 6236 mp3 files into range subdirectories.
+Left 112 bismillah file(s) (ayah 000) in place, not moved.
+- quran_saheeh001-006_media/: 954 files
+- quran_saheeh007-015_media/: 947 files
+- quran_saheeh016-024_media/: 954 files
+- quran_saheeh025-036_media/: 933 files
+- quran_saheeh037-049_media/: 842 files
+- quran_saheeh050-069_media/: 745 files
+- quran_saheeh070-114_media/: 861 files
+(which totals 6236 ayahs)
 
       Once that is done use SubSticher to make opus chaptered audiobooks with csv 
       (Anki convert to audiobook and choose csv)
@@ -99,13 +90,13 @@ Steps:
       and then in Column Selection section click Use Last (3,4,5, Sura 1, Aya 2) 
       so need not manually fill in again
 
-  B. Remove translation info header, id column, footnotes column
-  C. Normalize Arabic transliteration characters, remove reference & verse numbers
-  D. Split into 7 range-based files (001-006, 007-015, etc.)
-  E. Add Arabic text and audio from quran_saheeh source files
-  F. (Optional) Generate translated VTT files from existing English VTT source files
-     (long subtitle cues are automatically split into shorter ones → zsplit/Language/)
-  G. (Optional) Zip zsplit folder for distribution
+B. Remove translation info header, id column, footnotes column
+C. Normalize Arabic transliteration characters, remove reference & verse numbers
+D. Split into 7 range-based files (001-006, 007-015, etc.)
+E. Add Arabic text and audio from quran_saheeh source files
+F. (Optional) Generate translated VTT files from existing English VTT source files
+   (long subtitle cues are automatically split into shorter ones → zsplit/Language/)
+G. (Optional) Zip zsplit folder for distribution
 
 For Japanese, Chinese, Thai, and Khmer tokenization, install:
   pip3 install jieba sudachipy SudachiDict-core pythainlp[attacut] khmer-segmenter

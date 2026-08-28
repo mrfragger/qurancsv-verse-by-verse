@@ -2,7 +2,14 @@
 Quran csv verse-by-verse
 
 Convert Quran with audio for each ayah from either everyahah.com or quranenc.com
-with subtitles using 82 csv translations.  The csv references the surah and ayah of each audio which corresponds with the audio of each audio mp3.  Like 002255 references surah 2 ayah 255 for instance. Subtitles can pretty much be 80 characters long otherwise subs get super small so the ayah needs to be intelligently divided up with up to 6 breaks depending on character length of ayah.  This is done super fast but for Japanese, Thai and Khmer it needs to tokenize each word so it knows where to make the breakpoint rather than breaking in the middle of a word.
+with subtitles using 82 csv translations.  The csv references the surah and ayah 
+of each audio which corresponds with the audio of each audio mp3.  
+
+Like 002255 references surah 2 ayah 255 for instance. Subtitles can pretty much be 80 characters 
+long otherwise subs get super small so the ayah needs to be intelligently divided up with up to 
+6 breaks depending on character length of ayah.  This is done super fast but for Japanese, Thai 
+and Khmer it needs to tokenize each word so it knows where to make the breakpoint rather than 
+breaking in the middle of a word.
 
 download.py and files.json is for downloading audio using api of quranenc.com
 duration_report.sh is used to gather duration of audiobooks like so
@@ -20,7 +27,8 @@ duration_report.sh is used to gather duration of audiobooks like so
 19h 25m Vietnamese - (Rowwad)
 
 versebyversequran.zip 
-contains 82 csv translations from quranenc.com as well as the 7 split csv files of the English Sahih International translation.
+contains 82 csv translations from quranenc.com as well as the 7 split csv files 
+of the English Sahih International translation.
 quran_saheeh001-006.csv
 quran_saheeh007-015.csv
 quran_saheeh016-024.csv
@@ -29,7 +37,9 @@ quran_saheeh037-049.csv
 quran_saheeh050-069.csv
 quran_saheeh070-114.csv
 
-These are then processed for the timings of the quran audiobooks.  Doesn't matter which language as long as their is an official quran translation for it in csv then the default English can be overwritten to whichever language.
+These are then processed for the timings of the quran audiobooks.  
+Does not matter which language as long as their is an official quran translation 
+for it in csv then the default English can be overwritten to whichever language.
 
 
 ╔══════════════════════════════════════════════════════════════╗
@@ -46,7 +56,8 @@ Steps:
       quran_saheeh037-049_media
       quran_saheeh050-069_media
       quran_saheeh070-114_media
-      This can be done automatically by putting all mp3 into a subdir named quranversebyverse then choosing 3. Organize mp3 media into range subdirectories
+      This can be done automatically by putting all mp3 into a subdir named quranversebyverse 
+      then choosing 3. Organize mp3 media into range subdirectories
 
       === Organize MP3 media files into range subdirectories ===
 
@@ -61,10 +72,12 @@ Steps:
           quran_saheeh070-114_media/: 861 files
           (which totals 6236 ayahs)
 
-      Once that's done use SubSticher to make opus chaptered audiobooks with csv (Anki convert to audiobook and choose csv)
+      Once that is done use SubSticher to make opus chaptered audiobooks with csv 
+      (Anki convert to audiobook and choose csv)
 
       Language put Quran Arabic or Quran English
-      Title should automatically fill with 001-006 depending on which csv is chosen and put reciters name after 001-006
+      Title should automatically fill with 001-006 depending on which csv is chosen 
+      and put reciters name after 001-006
       example: Quran Arabic - 007-015 Ghamadi Verse by Verse
 
       Audio Repetitions 1x (2x, 3x, 4x are for anki audiobooks)
@@ -73,15 +86,18 @@ Steps:
       check 'Use filename as chaptername' so surah 2 ayah 5 is 002005 rather 4 digits
       uncheck Sample Mode (50 entries)
       check Prepend Sura/Aya to subtitles
-      check Match media by range (this automatically change 001-006 to 070-114 corresponding to selected  csv)
+      check Match media by range (this automatically change 001-006 to 070-114 
+          corresponding to selected  csv)
 
       Front column translation (this is the chapter name)
-      Back Column (arabic, doesn't matter though only for 2x, 3x, 4x repetitions)
+      Back Column (arabic, does not matter though only for 2x, 3x, 4x repetitions)
       Audio Column audio (this is the mp3)
       Sura Column sura (adds surah number before each verse in the vtt subs)
       Aya Column aya (adds ayah number before each verse in the vtt subs)
 
-      Subsequent audiobooks just choose the next csv and it autofills the surah numbers and then in Column Selection section click Use Last (3,4,5, Sura 1, Aya 2) so needn't manually fill in again
+      Subsequent audiobooks just choose the next csv and it autofills the surah numbers
+      and then in Column Selection section click Use Last (3,4,5, Sura 1, Aya 2) 
+      so need not manually fill in again
 
   B. Remove translation info header, id column, footnotes column
   C. Normalize Arabic transliteration characters, remove reference & verse numbers

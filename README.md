@@ -1,3 +1,4 @@
+```bash
 Quran csv verse-by-verse
 
 Convert Quran with audio for each ayah from either everyahah.com or quranenc.com
@@ -121,3 +122,4 @@ And all translation CSV files in their respective subdirs:
   french/french_montada_v1.0.0-csv.1.csv
   german/german_bubenheim_v1.1.4-csv.1.csv
   etc.
+```

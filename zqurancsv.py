@@ -3,6 +3,7 @@
 import csv
 import glob
 import io
+import math
 import os
 import platform
 import re
@@ -89,10 +90,30 @@ REPLACEMENTS = {
     "\u00DB": "U",
 }
 
-CJK_THRESHOLDS = {6: 160, 5: 133, 4: 107, 3: 80, 2: 53}
-LATIN_THRESHOLDS = {6: 480, 5: 400, 4: 320, 3: 240, 2: 160}
-THAI_THRESHOLDS = {6: 400, 5: 320, 4: 260, 3: 200, 2: 130}
-KHMER_THRESHOLDS = {6: 400, 5: 320, 4: 260, 3: 200, 2: 130}
+# Target characters per split segment, per detected script.
+# Splitting now scales to however many parts are needed to keep each
+# segment at or near this target, with no upper limit on part count.
+TARGET_CHARS = {
+    "latin": 80,
+    "arabic": 80,
+    "chinese": 26,
+    "japanese": 26,
+    "korean": 26,
+    "thai": 66,
+    "khmer": 66,
+}
+
+# Set to an integer to cap the number of split parts; None = no cap.
+MAX_SPLIT_PARTS = None
+
+
+def compute_num_parts(length, target_chars, max_parts=MAX_SPLIT_PARTS):
+    if length <= target_chars:
+        return 0
+    parts = max(2, math.ceil(length / target_chars))
+    if max_parts is not None:
+        parts = min(parts, max_parts)
+    return parts
 
 
 def detect_prefix(filename):
@@ -586,210 +607,43 @@ def split_vtt_long_subs(vtt_path, output_path):
             clean = verse_num_re.sub("", clean)
             script = detect_script(clean)
 
-            if script == "arabic":
-                text_to_split = original_text
-                thresholds = LATIN_THRESHOLDS
-                num_parts = 0
-                for n_parts in [6, 5, 4, 3, 2]:
-                    if len(clean) > thresholds[n_parts]:
-                        num_parts = n_parts
-                        break
-                if num_parts > 0:
+            target_chars = TARGET_CHARS.get(script, TARGET_CHARS["latin"])
+            num_parts = compute_num_parts(len(clean), target_chars)
+
+            if num_parts > 0:
+                if script in ("chinese", "japanese", "korean", "thai", "khmer"):
+                    text_parts = split_cjk_text(clean, num_parts, script)
+                else:
+                    # Arabic keeps any inline tags from the original text;
+                    # everything else (Latin/default) splits on the cleaned text.
+                    text_to_split = original_text if script == "arabic" else clean
                     boundaries = [0]
                     for k in range(1, num_parts):
-                        target = len(text_to_split) * k // num_parts
-                        pos = find_word_boundary(text_to_split, target)
+                        target_pos = len(text_to_split) * k // num_parts
+                        pos = find_word_boundary(text_to_split, target_pos)
                         if pos > boundaries[-1]:
                             boundaries.append(pos)
                     boundaries.append(len(text_to_split))
                     text_parts = []
                     for b in range(len(boundaries) - 1):
-                        part = text_to_split[boundaries[b]:boundaries[b+1]].strip()
+                        part = text_to_split[boundaries[b]:boundaries[b + 1]].strip()
                         if part:
                             text_parts.append(part)
                     while len(text_parts) < num_parts:
                         text_parts.append("")
-                    dur = end_ms - start_ms
-                    for idx in range(num_parts):
-                        t_start = start_ms + dur * idx // num_parts
-                        t_end = start_ms + dur * (idx + 1) // num_parts
-                        output.append(f"{format_timestamp_ms(t_start)} --> {format_timestamp_ms(t_end)}")
-                        output.append(text_parts[idx])
-                        output.append("")
-                    split_count += 1
-                else:
-                    output.append(line.strip())
-                    output.append(original_text)
-                    output.append("")
 
-            elif script in ("chinese", "japanese", "korean"):
-                thresholds = CJK_THRESHOLDS
-                num_parts = 0
-                for n_parts in [6, 5, 4, 3, 2]:
-                    if len(clean) > thresholds[n_parts]:
-                        num_parts = n_parts
-                        break
-                if num_parts > 0:
-                    text_parts = split_cjk_text(clean, num_parts, script)
-                    dur = end_ms - start_ms
-                    for idx in range(num_parts):
-                        t_start = start_ms + dur * idx // num_parts
-                        t_end = start_ms + dur * (idx + 1) // num_parts
-                        output.append(f"{format_timestamp_ms(t_start)} --> {format_timestamp_ms(t_end)}")
-                        output.append(text_parts[idx] if idx < len(text_parts) else "")
-                        output.append("")
-                    split_count += 1
-                else:
-                    output.append(line.strip())
-                    output.append(clean)
+                dur = end_ms - start_ms
+                for idx in range(num_parts):
+                    t_start = start_ms + dur * idx // num_parts
+                    t_end = start_ms + dur * (idx + 1) // num_parts
+                    output.append(f"{format_timestamp_ms(t_start)} --> {format_timestamp_ms(t_end)}")
+                    output.append(text_parts[idx] if idx < len(text_parts) else "")
                     output.append("")
-
-            elif script == "thai":
-                thresholds = THAI_THRESHOLDS
-                num_parts = 0
-                for n_parts in [6, 5, 4, 3, 2]:
-                    if len(clean) > thresholds[n_parts]:
-                        num_parts = n_parts
-                        break
-                if num_parts > 0:
-                    text_parts = split_cjk_text(clean, num_parts, script)
-                    dur = end_ms - start_ms
-                    for idx in range(num_parts):
-                        t_start = start_ms + dur * idx // num_parts
-                        t_end = start_ms + dur * (idx + 1) // num_parts
-                        output.append(f"{format_timestamp_ms(t_start)} --> {format_timestamp_ms(t_end)}")
-                        output.append(text_parts[idx] if idx < len(text_parts) else "")
-                        output.append("")
-                    split_count += 1
-                else:
-                    output.append(line.strip())
-                    output.append(clean)
-                    output.append("")
-
-            elif script == "khmer":
-                thresholds = KHMER_THRESHOLDS
-                num_parts = 0
-                for n_parts in [6, 5, 4, 3, 2]:
-                    if len(clean) > thresholds[n_parts]:
-                        num_parts = n_parts
-                        break
-                if num_parts > 0:
-                    text_parts = split_cjk_text(clean, num_parts, script)
-                    dur = end_ms - start_ms
-                    for idx in range(num_parts):
-                        t_start = start_ms + dur * idx // num_parts
-                        t_end = start_ms + dur * (idx + 1) // num_parts
-                        output.append(f"{format_timestamp_ms(t_start)} --> {format_timestamp_ms(t_end)}")
-                        output.append(text_parts[idx] if idx < len(text_parts) else "")
-                        output.append("")
-                    split_count += 1
-                else:
-                    output.append(line.strip())
-                    output.append(clean)
-                    output.append("")
-
+                split_count += 1
             else:
-                thresholds = LATIN_THRESHOLDS
-                num_parts = 0
-                for n_parts in [6, 5, 4, 3, 2]:
-                    if len(clean) > thresholds[n_parts]:
-                        num_parts = n_parts
-                        break
-
-                if num_parts == 6:
-                    sixth = len(clean) // 6
-                    s1 = find_word_boundary(clean, sixth)
-                    s2 = find_word_boundary(clean, sixth * 2)
-                    s3 = find_word_boundary(clean, sixth * 3)
-                    s4 = find_word_boundary(clean, sixth * 4)
-                    s5 = find_word_boundary(clean, sixth * 5)
-                    text_parts = [
-                        clean[:s1].strip(), clean[s1:s2].strip(), clean[s2:s3].strip(),
-                        clean[s3:s4].strip(), clean[s4:s5].strip(), clean[s5:].strip(),
-                    ]
-                    dur = end_ms - start_ms
-                    times = [start_ms + dur * k // 6 for k in range(1, 6)] + [end_ms]
-                    starts = [start_ms] + times[:-1]
-                    for idx in range(6):
-                        output.append(f"{format_timestamp_ms(starts[idx])} --> {format_timestamp_ms(times[idx])}")
-                        output.append(text_parts[idx])
-                        output.append("")
-                    split_count += 1
-
-                elif num_parts == 5:
-                    fifth = len(clean) // 5
-                    s1 = find_word_boundary(clean, fifth)
-                    s2 = find_word_boundary(clean, fifth * 2)
-                    s3 = find_word_boundary(clean, fifth * 3)
-                    s4 = find_word_boundary(clean, fifth * 4)
-                    text_parts = [
-                        clean[:s1].strip(), clean[s1:s2].strip(), clean[s2:s3].strip(),
-                        clean[s3:s4].strip(), clean[s4:].strip(),
-                    ]
-                    dur = end_ms - start_ms
-                    times = [start_ms + dur * k // 5 for k in range(1, 5)] + [end_ms]
-                    starts = [start_ms] + times[:-1]
-                    for idx in range(5):
-                        output.append(f"{format_timestamp_ms(starts[idx])} --> {format_timestamp_ms(times[idx])}")
-                        output.append(text_parts[idx])
-                        output.append("")
-                    split_count += 1
-
-                elif num_parts == 4:
-                    quarter = len(clean) // 4
-                    s1 = find_word_boundary(clean, quarter)
-                    s2 = find_word_boundary(clean, len(clean) // 2)
-                    s3 = find_word_boundary(clean, quarter * 3)
-                    text_parts = [
-                        clean[:s1].strip(), clean[s1:s2].strip(),
-                        clean[s2:s3].strip(), clean[s3:].strip(),
-                    ]
-                    dur = end_ms - start_ms
-                    m1 = start_ms + dur // 4
-                    m2 = start_ms + dur // 2
-                    m3 = start_ms + dur * 3 // 4
-                    starts = [start_ms, m1, m2, m3]
-                    times = [m1, m2, m3, end_ms]
-                    for idx in range(4):
-                        output.append(f"{format_timestamp_ms(starts[idx])} --> {format_timestamp_ms(times[idx])}")
-                        output.append(text_parts[idx])
-                        output.append("")
-                    split_count += 1
-
-                elif num_parts == 3:
-                    s1 = find_word_boundary(clean, len(clean) // 3)
-                    s2 = find_word_boundary(clean, len(clean) * 2 // 3)
-                    text_parts = [
-                        clean[:s1].strip(), clean[s1:s2].strip(), clean[s2:].strip(),
-                    ]
-                    dur = end_ms - start_ms
-                    m1 = start_ms + dur // 3
-                    m2 = start_ms + dur * 2 // 3
-                    starts = [start_ms, m1, m2]
-                    times = [m1, m2, end_ms]
-                    for idx in range(3):
-                        output.append(f"{format_timestamp_ms(starts[idx])} --> {format_timestamp_ms(times[idx])}")
-                        output.append(text_parts[idx])
-                        output.append("")
-                    split_count += 1
-
-                elif num_parts == 2:
-                    s1 = find_word_boundary(clean, len(clean) // 2)
-                    p1 = clean[:s1].strip()
-                    p2 = clean[s1:].strip()
-                    mid_ms = start_ms + (end_ms - start_ms) // 2
-                    output.append(f"{format_timestamp_ms(start_ms)} --> {format_timestamp_ms(mid_ms)}")
-                    output.append(p1)
-                    output.append("")
-                    output.append(f"{format_timestamp_ms(mid_ms)} --> {format_timestamp_ms(end_ms)}")
-                    output.append(p2)
-                    output.append("")
-                    split_count += 1
-
-                else:
-                    output.append(line.strip())
-                    output.append(clean)
-                    output.append("")
+                output.append(line.strip())
+                output.append(original_text if script == "arabic" else clean)
+                output.append("")
         else:
             output.append(line)
             i += 1

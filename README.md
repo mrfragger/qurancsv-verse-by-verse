@@ -12,7 +12,9 @@ and downloading Quranic Universal Audio (audio.qud.dev) verse timing and audio
 (gives slug id of the reciter)
 
 `python3 hf_to_release.py --list --slugs-only > slugs.txt`
+
 \# 96 reciters
+
 looks like this which you can search for reciter
 ```abdul_hamid_ghraio_2025_yt
 abdul_hamid_ghraio_2026_yt

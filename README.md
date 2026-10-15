@@ -1,20 +1,20 @@
 # All of this process is built into SubStitcher except:
 downloading audio from quranenc.com for Quran <language>
 
-download.py
-files.json
+`download.py`
+`files.json`
 
 and downloading Quranic Universal Audio (audio.qud.dev) verse timing and audio
 
-download_audio.py
-hf_to_release.py
+`download_audio.py`
+`hf_to_release.py`
 
 (gives slug id of the reciter)
 
-python hf_to_release.py --list --slugs-only > slugs.txt
+`python hf_to_release.py --list --slugs-only > slugs.txt`
 
 looks like this which you can search for reciter
-abdul_hamid_ghraio_2025_yt
+```abdul_hamid_ghraio_2025_yt
 abdul_hamid_ghraio_2026_yt
 abdulaziz_al_turki_yt
 abdulbasit_abdulsamad_mujawwad_tarteel
@@ -25,16 +25,16 @@ abdullah_al_mattrod_qdc
 abdullah_al_qarafi_mp3quran
 abdullah_basfar_qdc
 abdullah_kamel_way2quran
-abdulmohsin_al_qasim_qdc
+abdulmohsin_al_qasim_qdc```
 
 
 (download the verse timings and catalog with url links)
 
-python3 hf_to_release.py abdulmohsin_al_qasim_qdc
+`python3 hf_to_release.py abdulmohsin_al_qasim_qdc`
 
 (download the each surah mp3 and split each one into a chapter)
 
-python download_audio.py out/abdulmohsin_al_qasim_qdc/catalog.json --reciter abdulmohsin_al_qasim_qdc --format ayah
+`python download_audio.py out/abdulmohsin_al_qasim_qdc/catalog.json --reciter abdulmohsin_al_qasim_qdc --format ayah`
 
 
 # Quran csv verse-by-verse

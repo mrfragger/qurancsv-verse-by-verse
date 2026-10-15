@@ -9,7 +9,7 @@ and downloading Quranic Universal Audio (audio.qud.dev) verse timing and audio
 `download_audio.py`
 `hf_to_release.py`
 
-(gives slug id of the reciter)
+### gives slug id of the reciter
 
 `python3 hf_to_release.py --list --slugs-only > slugs.txt`
 
@@ -31,14 +31,17 @@ abdulmohsin_al_qasim_qdc
 ```
 
 
-(download the verse timings and catalog with url links)
+### download the verse timings and catalog with url links
 
 `python3 hf_to_release.py abdulmohsin_al_qasim_qdc`
 
-(download the each surah mp3 and split each one into a chapter)
+### download the each surah mp3 and split each one into a chapter
+
+this download_audio.py is slightly modified version from the original in that it has resuming support and checks for which verses are missing
 
 `python3 download_audio.py out/abdulmohsin_al_qasim_qdc/catalog.json --reciter abdulmohsin_al_qasim_qdc --format ayah`
 
+# below is just kept for reference but no need just use SubStitcher as it handles it
 
 # Quran csv verse-by-verse
 

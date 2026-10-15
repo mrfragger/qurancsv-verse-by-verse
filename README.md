@@ -11,8 +11,8 @@ and downloading Quranic Universal Audio (audio.qud.dev) verse timing and audio
 
 (gives slug id of the reciter)
 
-`python hf_to_release.py --list --slugs-only > slugs.txt`
-
+`python3 hf_to_release.py --list --slugs-only > slugs.txt`
+\# 96 reciters
 looks like this which you can search for reciter
 ```abdul_hamid_ghraio_2025_yt
 abdul_hamid_ghraio_2026_yt
@@ -35,7 +35,7 @@ abdulmohsin_al_qasim_qdc
 
 (download the each surah mp3 and split each one into a chapter)
 
-`python download_audio.py out/abdulmohsin_al_qasim_qdc/catalog.json --reciter abdulmohsin_al_qasim_qdc --format ayah`
+`python3 download_audio.py out/abdulmohsin_al_qasim_qdc/catalog.json --reciter abdulmohsin_al_qasim_qdc --format ayah`
 
 
 # Quran csv verse-by-verse

@@ -25,7 +25,8 @@ abdullah_al_mattrod_qdc
 abdullah_al_qarafi_mp3quran
 abdullah_basfar_qdc
 abdullah_kamel_way2quran
-abdulmohsin_al_qasim_qdc```
+abdulmohsin_al_qasim_qdc
+```
 
 
 (download the verse timings and catalog with url links)

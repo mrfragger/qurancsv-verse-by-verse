@@ -3,6 +3,20 @@ downloading audio from quranenc.com for Quran <language>
 `download.py`
 `files.json`
 
+just need to change the language in two places in `files.json`
+```"translation": "vietnamese_rwwad",
+"generated": "2026-07-12 13:46",
+"available": 6236,
+"total": 6236,
+"base_url": "https://d.quranenc.com/data/audio/vietnamese_rwwad/",
+"files": [
+    "001001.mp3",
+    "001002.mp3",
+    "001003.mp3",
+    "001004.mp3",
+    "001005.mp3",
+    ```
+
 and downloading Quranic Universal Audio (audio.qud.dev) verse timing and audio
 
 `download_audio.py`

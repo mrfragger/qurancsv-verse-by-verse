@@ -43,7 +43,7 @@ this download_audio.py is slightly modified version from the original in that it
 
 `python3 download_audio.py out/abdulmohsin_al_qasim_qdc/catalog.json --reciter abdulmohsin_al_qasim_qdc --format ayah`
 
-# below is just kept for reference but no need just use SubStitcher as it handles it
+# Below is just kept for reference but no need. Just use SubStitcher as it handles it.
 
 # Quran csv verse-by-verse
 

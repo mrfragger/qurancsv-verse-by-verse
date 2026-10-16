@@ -34,9 +34,7 @@ and downloading Quranic Universal Audio (audio.qud.dev) verse timing and audio
 ![slugs_names.txt](slugs_names.txt) (96 reciters, last updated 2026-10-16)
 
 output example
-```abdulaziz_al_turki_yt                          Abdulaziz Al-Turki  (Murattal, YouTube, 2025)  عبد العزيز التركي
-abdulbasit_abdulsamad_mujawwad_tarteel         Abdulbasit Abdulsamad  (Mujawwad, Tarteel CDN, Studio)  عبد الباسط عبد الصمد
-abdulbasit_abdulsamad_tarteel                  Abdulbasit Abdulsamad  (Murattal, Tarteel CDN)  عبد الباسط عبد الصمد
+```
 abdulbasit_abdulsamad_warsh_qdc                Abdulbasit Abdulsamad  (Warsh A'n Nafi', Murattal, QuranicAudio)  عبد الباسط عبد الصمد
 abdullah_al_buaijan_2025_yt                    Abdullah Al-Buaijan  (Murattal, YouTube, 2025, Studio)  عبد الله البعيجان
 abdullah_al_mattrod_qdc                        Abdullah Al-Mattrod  (Murattal, QuranicAudio)  عبد الله المطرود

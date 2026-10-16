@@ -1,4 +1,3 @@
-# All of this process is built into SubStitcher except:
 downloading audio from quranenc.com for Quran <language>
 
 `download.py`
@@ -46,7 +45,7 @@ this download_audio.py is slightly modified version from the original in that it
 
 `python3 download_audio.py out/abdulmohsin_al_qasim_qdc/catalog.json --reciter abdulmohsin_al_qasim_qdc --format ayah`
 
-# Below is just kept for reference but no need. Just use SubStitcher as it handles it.
+# SubStitcher app handles everything below. Only kept for a legacy reference.
 
 # Quran csv verse-by-verse
 

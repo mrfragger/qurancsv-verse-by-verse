@@ -43,6 +43,9 @@ this download_audio.py is slightly modified version from the original in that it
 
 `python3 download_audio.py out/abdulmohsin_al_qasim_qdc/catalog.json --reciter abdulmohsin_al_qasim_qdc --format ayah`
 
+those who don't wish to install duckdb, huggingface_hub, pyarrow and fear they might get throttled can download all 96 reciters (last updated 2026-10-16) with verse timings.  Check catalog.json for missing verses, if any.
+7MB ![out.zip](out.zip)
+
 # Below is just kept for reference but no need. Just use SubStitcher as it handles it.
 
 # Quran csv verse-by-verse

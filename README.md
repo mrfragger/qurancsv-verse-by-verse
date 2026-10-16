@@ -24,13 +24,14 @@ just need to change the language in two places in `files.json`
 and downloading Quranic Universal Audio (audio.qud.dev) verse timing and audio
 
 `download_audio.py`
+
 `hf_to_release.py`
 
 ### gives slug id and names of the reciter and so on
 
-`python3 hf_to_release.py --list > slugs.txt`
+`python3 hf_to_release.py --all > slugs_names.txt`
 
-\# 96 reciters
+![slugs_names.txt](slugs_names.txt) (96 reciters, last updated 2026-10-16)
 
 output example
 ```abdulaziz_al_turki_yt                          Abdulaziz Al-Turki  (Murattal, YouTube, 2025)  عبد العزيز التركي

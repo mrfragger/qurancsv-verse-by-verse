@@ -1,6 +1,7 @@
 downloading audio from quranenc.com for Quran <language>
 
 `download.py`
+
 `files.json`
 
 just need to change the language in two places in `files.json`
@@ -17,6 +18,8 @@ just need to change the language in two places in `files.json`
     "001004.mp3",
     "001005.mp3",
 ```
+
+`python3 download.py`
 
 and downloading Quranic Universal Audio (audio.qud.dev) verse timing and audio
 

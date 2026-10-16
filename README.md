@@ -9,25 +9,27 @@ and downloading Quranic Universal Audio (audio.qud.dev) verse timing and audio
 `download_audio.py`
 `hf_to_release.py`
 
-### gives slug id of the reciter
+### gives slug id and names of the reciter and so on
 
-`python3 hf_to_release.py --list --slugs-only > slugs.txt`
+`python3 hf_to_release.py --list > slugs.txt`
 
 \# 96 reciters
 
-looks like this which you can search for reciter
-```abdul_hamid_ghraio_2025_yt
-abdul_hamid_ghraio_2026_yt
-abdulaziz_al_turki_yt
-abdulbasit_abdulsamad_mujawwad_tarteel
-abdulbasit_abdulsamad_tarteel
-abdulbasit_abdulsamad_warsh_qdc
-abdullah_al_buaijan_2025_yt
-abdullah_al_mattrod_qdc
-abdullah_al_qarafi_mp3quran
-abdullah_basfar_qdc
-abdullah_kamel_way2quran
-abdulmohsin_al_qasim_qdc
+output example
+```abdulaziz_al_turki_yt                          Abdulaziz Al-Turki  (Murattal, YouTube, 2025)  عبد العزيز التركي
+abdulbasit_abdulsamad_mujawwad_tarteel         Abdulbasit Abdulsamad  (Mujawwad, Tarteel CDN, Studio)  عبد الباسط عبد الصمد
+abdulbasit_abdulsamad_tarteel                  Abdulbasit Abdulsamad  (Murattal, Tarteel CDN)  عبد الباسط عبد الصمد
+abdulbasit_abdulsamad_warsh_qdc                Abdulbasit Abdulsamad  (Warsh A'n Nafi', Murattal, QuranicAudio)  عبد الباسط عبد الصمد
+abdullah_al_buaijan_2025_yt                    Abdullah Al-Buaijan  (Murattal, YouTube, 2025, Studio)  عبد الله البعيجان
+abdullah_al_mattrod_qdc                        Abdullah Al-Mattrod  (Murattal, QuranicAudio)  عبد الله المطرود
+abdullah_al_qarafi_mp3quran                    Abdullah Al-Qarafi  (Murattal, MP3Quran)  عبد الله القرافي
+abdullah_basfar_qdc                            Abdullah Basfar  (Murattal, QuranicAudio)  عبد الله بصفر
+abdullah_kamel_way2quran                       Abdullah Kamel  (Murattal, Way2Quran)  عبد الله كامل
+abdulmohsin_al_qasim_qdc                       Abdulmohsin Al-Qasim  (Murattal, QuranicAudio)  عبد المحسن القاسم
+abdulrahman_al_sudais_tarteel                  Abdulrahman Al-Sudais  (Murattal, Tarteel CDN)  عبد الرحمن السديس
+abdulrahman_al_sudais_yt                       Abdulrahman Al-Sudais  (Murattal, YouTube, 2026)  عبد الرحمن السديس
+abdulrahman_az_zawawi_way2quran                Abdulrahman Az-Zawawi  (Murattal, Way2Quran)  عبد الرحمن الزواوي
+abdulwadood_haneef_mp3quran                    Abdulwadood Haneef  (Murattal, MP3Quran)  عبد الودود حنيف
 ```
 
 

@@ -7,8 +7,8 @@ Only metadata columns are read (never the audio column).
 
     pip install duckdb huggingface_hub pyarrow
 
-    python hf_to_release.py --list                   # live list: slug<TAB>riwayah
-    python hf_to_release.py --list --slugs-only > slugs.txt
+    python hf_to_release.py --list                   # slug, reciter name, (style, channel, year), Arabic name
+    python hf_to_release.py --list --slugs-only > slugs.txt   # pure slugs, one per line
     python hf_to_release.py mukhtar_al_haj_mp3quran  # one or more slugs
     python hf_to_release.py --all                    # every reciter (skips finished ones)
     python hf_to_release.py --all --match qdc        # only slugs containing "qdc"
@@ -76,6 +76,54 @@ def list_reciters() -> dict:
     cd = info.card_data
     configs = cd.to_dict().get("configs") if hasattr(cd, "to_dict") else cd.get("configs")
     return parse_configs(configs)
+
+
+def fetch_catalog(url: str = f"hf://datasets/{REPO}/mushafs/all-*.parquet") -> dict:
+    """{slug: catalog row} from the dataset's `mushafs` catalog (reciter names,
+    style, channel, year...). It is one small parquet. Never fatal: on any
+    failure it returns {} so listing and building still work, just without names."""
+    rows = None
+    try:
+        import duckdb
+
+        cur = duckdb.connect().execute(f"SELECT * FROM '{url}'")
+        cols = [d[0] for d in cur.description]
+        rows = [dict(zip(cols, r)) for r in cur.fetchall()]
+    except Exception:
+        try:
+            from huggingface_hub import HfFileSystem
+            import pyarrow.parquet as pq
+
+            fs = HfFileSystem()
+            rows = []
+            for p in sorted(fs.glob(url.replace("hf://", ""))):
+                with fs.open(p, "rb") as fh:
+                    rows += pq.read_table(fh).to_pylist()
+        except Exception as exc:
+            print(f"(could not load reciter names: {exc})", file=sys.stderr)
+            return {}
+    return {r["slug"]: r for r in rows if r.get("slug")}
+
+
+def describe(row) -> str:
+    """'Name EN  (style, channel, year)  Name AR' for one catalog row.
+
+    The parenthesised bit tells variants of the same reciter apart (Murattal vs
+    Mujawwad, YouTube vs QuranicAudio, 2025 vs 2026). Arabic goes last so the
+    right-to-left text can't scramble the rest of the line."""
+    if not row:
+        return ""
+    bits = []
+    riwayah = row.get("riwayah") or ""
+    if riwayah and not riwayah.lower().startswith("hafs"):  # Hafs is the default; flag the rest
+        bits.append(riwayah)
+    for key in ("style", "channel", "recording_year", "recording_context"):
+        val = row.get(key)
+        if val not in (None, ""):
+            bits.append(str(val))
+    tag = f"  ({', '.join(bits)})" if bits else ""
+    ar = row.get("name_ar")
+    return f"{row.get('name_en') or ''}{tag}" + (f"  {ar}" if ar else "")
 
 
 def fetch_rows(slug: str, folder: str, cols: str = COLS):
@@ -208,8 +256,14 @@ def main() -> int:
         reciters = {s: d for s, d in reciters.items() if args.match in s}
 
     if args.list:
-        for slug, folder in sorted(reciters.items()):
-            print(slug if args.slugs_only else f"{slug}\t{folder}")
+        if args.slugs_only:  # pure slugs, safe to feed to a loop
+            for slug in sorted(reciters):
+                print(slug)
+        else:
+            catalog = fetch_catalog()
+            width = max((len(s) for s in reciters), default=0)
+            for slug in sorted(reciters):
+                print(f"{slug:<{width}}  {describe(catalog.get(slug))}".rstrip())
         print(f"# {len(reciters)} reciters", file=sys.stderr)
         return 0
 
@@ -218,6 +272,7 @@ def main() -> int:
         ap.error("give slug(s), or use --all / --list")
 
     failed, warned, skipped = [], [], []
+    catalog = fetch_catalog()
     for n, slug in enumerate(todo, 1):
         dest = args.out / slug
         if (not args.force and (dest / "catalog.json").exists()
@@ -229,7 +284,8 @@ def main() -> int:
             print(f"[{n}/{len(todo)}] {slug}: not in the dataset's config list")
             failed.append(slug)
             continue
-        print(f"[{n}/{len(todo)}] {slug} ({folder})")
+        name = (catalog.get(slug) or {}).get("name_en")
+        print(f"[{n}/{len(todo)}] {slug}{' - ' + name if name else ''} ({folder})")
         try:
             rows = fetch_rows(slug, folder)
             if not rows:

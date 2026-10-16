@@ -4,7 +4,8 @@ downloading audio from quranenc.com for Quran <language>
 `files.json`
 
 just need to change the language in two places in `files.json`
-```"translation": "vietnamese_rwwad",
+```
+"translation": "vietnamese_rwwad",
 "generated": "2026-07-12 13:46",
 "available": 6236,
 "total": 6236,
@@ -15,7 +16,7 @@ just need to change the language in two places in `files.json`
     "001003.mp3",
     "001004.mp3",
     "001005.mp3",
-    ```
+```
 
 and downloading Quranic Universal Audio (audio.qud.dev) verse timing and audio
 

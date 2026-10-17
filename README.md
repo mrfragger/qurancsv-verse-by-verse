@@ -51,25 +51,37 @@ abdulwadood_haneef_mp3quran                    Abdulwadood Haneef  (Murattal, MP
 generate list of missing verses from the local catalog.json
 `python3 hf_to_release.py --report --show-ok > missingverses.txt`
 
-```
-abdulaziz_al_turki_yt                          AVOID  surahs 39,79                                                                                                                                                                                                                                               Abdulaziz Al-Turki
-abdulbasit_abdulsamad_warsh_qdc                AVOID  ayahs 6:163, 7:137, 8:43, 9:71, 14:2, 14:7, 14:12, 19:41 (+25 more)                                                                                                                                                                                        Abdulbasit Abdulsamad
-abdullah_al_qarafi_mp3quran                    AVOID  ayahs 22:66, 22:67, 22:68, 22:69, 22:70, 22:71, 22:72, 22:73 (+5 more)                                                                                                                                                                                     Abdullah Al-Qarafi
-abdur_rashid_sufi_shubah_qdc                   AVOID  ayahs 11:72, 26:194, 33:11, 36:2, 37:7, 37:152, 88:16, 88:17 (+9 more)                                                                                                                                                                                     Abdur-Rashid Sufi
-ahmed_deban_qalon_mp3quran                     AVOID  ayahs 7:137, 14:27, 18:33, 18:84, 20:87, 20:88, 26:46, 30:4 (+15 more)                                                                                                                                                                                     Ahmed Deban
-ahmed_khader_al_trabulsi_qalon_tvquran         AVOID  ayahs 6:163, 7:137, 8:43, 9:37, 9:71, 11:82, 14:2, 14:7 (+24 more)                                                                                                                                                                                         Ahmed Khader Al-Trabulsi
-```
-
 ![missingverses.txt](missingverses.txt) (96 reciters, last updated 2026-10-16)
+
+example
+```
+abdullah_al_buaijan_2025_yt                    FILL   ayahs 16:53
+abdulrahman_al_sudais_yt                       FILL   ayahs 54:38, 54:39
+abdulrahman_az_zawawi_way2quran                FILL   ayahs 1:7
+ahmed_al_ajmi_qdc                              FILL   ayahs 26:21
+ahmed_issa_al_maasaraawi_mp3quran              FILL   ayahs 7:116, 41:15
+ahmed_kaseb_way2quran                          FILL   ayahs 37:179
+al_hussayni_al_azazy_kids_qdc                  FILL   ayahs 12:105, 21:72
+aziz_alili_qdc                                 FILL   ayahs 2:126
+hani_al_rifai_qdc_128k                         FILL   ayahs 1:1, 6:139
+kamel_al_bayli_warsh_way2quran                 FILL   ayahs 10:34
+khalid_al_qahtani_mp3quran                     FILL   ayahs 1:1, 28:61
+mahmoud_khalil_al_husary_mujawwad_tarteel      FILL   ayahs 62:10
+mohammed_abdulkareem_qdc                       FILL   ayahs 12:48
+mohammed_al_luhaidan_mp3quran                  FILL   ayahs 1:1, 3:199
+saber_abdulhakam_shubah_way2quran              FILL   ayahs 37:152
+saber_abdulhakam_warsh_way2quran               FILL   ayahs 99:7
+walid_atef_way2quran                           FILL   ayahs 2:83
+abdulaziz_al_turki_yt                          AVOID  surahs 39,79
+abdulbasit_abdulsamad_warsh_qdc                AVOID  ayahs 6:163, 7:137, 8:43, 9:71, 14:2, 14:7, 14:12, 19:41 (+25 more)
+abdullah_al_qarafi_mp3quran                    AVOID  ayahs 22:66, 22:67, 22:68, 22:69, 22:70, 22:71, 22:72, 22:73 (+5 more)
+```
 
 ### download the verse timings and catalog with url links
 
 `python3 hf_to_release.py abdulmohsin_al_qasim_qdc`
 
-Those who don't wish to install duckdb, huggingface_hub, pyarrow to use `hf_to_release.py` and fear they might get throttled without a huggingface account can download all 96 reciters with verse timings.  Check catalog.json for missing verses, if any.
-
-![out.zip](out.zip) 7MB (96 reciters, last updated 2026-10-16) right click and save as
-
+Those who don't wish to install duckdb, huggingface_hub, pyarrow to use `hf_to_release.py` and fear they might get throttled without a huggingface account can download all reciters with verse timings.
 
 ![out.zip](out.zip) 7MB (96 reciters, last updated 2026-10-16) right click and save as
 

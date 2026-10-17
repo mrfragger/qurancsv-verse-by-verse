@@ -14,6 +14,10 @@ Only metadata columns are read (never the audio column).
     python hf_to_release.py --all --match qdc        # only slugs containing "qdc"
     python hf_to_release.py --all --skip-missing     # don't build reciters with gaps
 
+    python hf_to_release.py --report                 # OFFLINE: which built reciters have missing surahs/ayahs
+    python hf_to_release.py --report --max-missing 1 # stricter: only 1 fillable ayah allowed
+    python hf_to_release.py --report --show-ok       # also list the complete ones
+
 While a reciter is processed it is checked for missing ayahs / surahs and a
 WARNING is printed. 1:1 (the basmalah) is reported as informational only, since
 it is missing from most recordings. Warned reciters are still built unless
@@ -26,6 +30,7 @@ Output goes to out/<slug>/{catalog.json,verse_timestamps.json.gz}; then:
 import argparse
 import gzip
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -197,7 +202,21 @@ def warn_lines(missing, tail_checked: bool) -> list:
     return lines
 
 
-def build(slug: str, rows, out: Path, missing) -> None:
+def _meta_fields(folder, meta) -> dict:
+    """Reciter details copied into catalog.json so --report can show names offline
+    (same key names as the release catalog)."""
+    out = {}
+    for key in ("reciter_id", "name_en", "name_ar", "country", "style", "channel",
+                "recording_year", "recording_context"):
+        val = (meta or {}).get(key)
+        if val not in (None, ""):
+            out[key] = val
+    if folder:
+        out["riwayah"] = folder
+    return out
+
+
+def build(slug: str, rows, out: Path, missing, folder=None, meta=None) -> None:
     out.mkdir(parents=True, exist_ok=True)
     verse_rows, urls = [], {}
     for i, (su, ay, dur, url, off) in enumerate(rows):
@@ -220,6 +239,7 @@ def build(slug: str, rows, out: Path, missing) -> None:
         json.dump(vt, f, ensure_ascii=False, separators=(",", ":"))
     catalog = {
         "slug": slug,
+        **_meta_fields(folder, meta),
         "audio_category": "by_surah",
         "coverage": {"ayahs": len(verse_rows), "surahs": len(urls),
                      "missing_verses": ", ".join(missing) or None},
@@ -237,6 +257,128 @@ def build(slug: str, rows, out: Path, missing) -> None:
               "video; chapter_offsets_ms is NOT written. Check before using.")
 
 
+# --------------------------------------------------------------------------
+# --report: OFFLINE summary of what is missing, read from the catalog.json files
+# --------------------------------------------------------------------------
+
+# "surah 39, surah 79" (this script) and "surahs 39,79" (release table) both parse;
+# the lookahead stops a following "1:1" from being swallowed as a surah number.
+_SURAH_RE = re.compile(r"surahs?\s+(\d+(?![\d:])(?:\s*,\s*\d+(?![\d:]))*)", re.I)
+_AYAH_RE = re.compile(r"\b(\d+:\d+(?:\(extra\))?)")
+
+
+def _ayah_key(ref: str):
+    s, a = re.match(r"(\d+):(\d+)", ref).groups()
+    return int(s), int(a)
+
+
+def _flatten(val) -> str:
+    if val is None:
+        return ""
+    if isinstance(val, (list, tuple, set)):
+        return ", ".join(str(v) for v in val)
+    return str(val)
+
+
+def analyse(rec: dict):
+    """-> (missing_surahs: set[int], missing_ayahs: list['s:a']) from one catalog record.
+
+    Uses coverage.missing_* (a string like "1:1, 6:139" / "surahs 39,79", or a list)
+    and also derives missing surahs from which chapters have no chapter_urls entry,
+    so it works for release catalogs as well as the ones this script writes."""
+    surahs, ayahs = set(), []
+    for key, val in (rec.get("coverage") or {}).items():
+        if "missing" not in key.lower():
+            continue
+        text = _flatten(val)
+        if not text:
+            continue
+        if "surah" in key.lower():          # e.g. missing_surahs: [39, 79]
+            surahs.update(int(x) for x in re.findall(r"\d+", text))
+        else:                               # e.g. missing_verses: "1:1, surahs 39,79"
+            for m in _SURAH_RE.finditer(text):
+                surahs.update(int(x) for x in re.findall(r"\d+", m.group(1)))
+            ayahs += _AYAH_RE.findall(text)
+    urls = (rec.get("audio") or {}).get("chapter_urls") or {}
+    if urls:
+        have = {int(c) for c in urls if str(c).isdigit()}
+        surahs |= set(range(1, 115)) - have
+    return surahs, sorted(set(ayahs), key=_ayah_key)
+
+
+def verdict(surahs, ayahs, max_missing: int) -> str:
+    """ok = complete or only 1:1 missing; FILL = a few ayahs you can substitute
+    from another reciter; AVOID = a missing surah or more ayahs than --max-missing."""
+    other = [a for a in ayahs if a != "1:1"]
+    if surahs or len(other) > max_missing:
+        return "AVOID"
+    return "FILL" if other else "ok"
+
+
+def summarize(surahs, ayahs, limit: int = 8) -> str:
+    parts = []
+    if surahs:
+        parts.append("surahs " + ",".join(str(s) for s in sorted(surahs)))
+    if ayahs:
+        more = f" (+{len(ayahs) - limit} more)" if len(ayahs) > limit else ""
+        parts.append("ayahs " + ", ".join(ayahs[:limit]) + more)
+    return "; ".join(parts) or "-"
+
+
+def load_catalogs(root: Path):
+    """Yield (path, record) for every reciter in the catalog.json files under root.
+    Accepts a single file, per-reciter catalogs, or a release-level catalog."""
+    paths = [root] if root.is_file() else sorted(root.rglob("catalog.json"))
+    for path in paths:
+        try:
+            doc = json.loads(path.read_bytes())
+        except (OSError, json.JSONDecodeError) as exc:
+            print(f"warning: cannot read {path}: {exc}", file=sys.stderr)
+            continue
+        if isinstance(doc, dict) and "recitations" in doc:
+            recs = doc["recitations"]
+        elif isinstance(doc, list):
+            recs = doc
+        else:
+            recs = [doc]
+        for rec in recs:
+            if isinstance(rec, dict):
+                yield path, rec
+
+
+def cmd_report(args) -> int:
+    """List reciters with missing surahs / ayahs. Reads only local catalog.json files."""
+    root = args.out
+    if not root.exists():
+        print(f"error: {root} does not exist - build reciters first or pass --out", file=sys.stderr)
+        return 2
+    rows = {}
+    for path, rec in load_catalogs(root):
+        slug = rec.get("slug") or path.parent.name
+        if (args.match and args.match not in slug) or (args.slugs and slug not in args.slugs):
+            continue
+        surahs, ayahs = analyse(rec)
+        rows[slug] = (slug, surahs, ayahs, verdict(surahs, ayahs, args.max_missing))
+    if not rows:
+        print(f"error: no matching catalog.json found under {root}", file=sys.stderr)
+        return 2
+
+    order = {"ok": 0, "FILL": 1, "AVOID": 2}  # worst last, so it ends up at the bottom of the screen
+    shown = sorted((r for r in rows.values() if args.show_ok or r[3] != "ok"),
+                   key=lambda r: (order[r[3]], r[0]))
+    w_slug = max((len(r[0]) for r in shown), default=0)
+    for slug, surahs, ayahs, v in shown:
+        print(f"{slug:<{w_slug}}  {v:<5}  {summarize(surahs, ayahs)}")
+
+    n = {k: sum(1 for r in rows.values() if r[3] == k) for k in order}
+    print(f"\n# {len(rows)} reciters checked: {n['ok']} complete (or only 1:1 missing), "
+          f"{n['FILL']} FILL, {n['AVOID']} AVOID", file=sys.stderr)
+    print(f"# FILL  = up to {args.max_missing} missing ayah(s) besides 1:1: substitute from another reciter\n"
+          f"# AVOID = a missing surah, or more than {args.max_missing} missing ayahs "
+          f"(change with --max-missing)", file=sys.stderr)
+    return 0
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -249,7 +391,16 @@ def main() -> int:
                     help="don't build reciters missing ayahs/surahs other than 1:1")
     ap.add_argument("--force", action="store_true", help="redo reciters already in --out")
     ap.add_argument("--out", type=Path, default=Path("out"))
+    ap.add_argument("--report", action="store_true",
+                    help="OFFLINE: list reciters with missing surahs/ayahs from the catalog.json "
+                         "files already under --out (slug args / --match narrow it)")
+    ap.add_argument("--max-missing", type=int, default=2,
+                    help="with --report: most missing ayahs (besides 1:1) still worth using (default 2)")
+    ap.add_argument("--show-ok", action="store_true", help="with --report: also list complete reciters")
     args = ap.parse_args()
+
+    if args.report:  # purely local: must run before anything touches the network
+        return cmd_report(args)
 
     reciters = list_reciters()
     if args.match:
@@ -299,7 +450,7 @@ def main() -> int:
                     print("  SKIPPED (--skip-missing)")
                     skipped.append(slug)
                     continue
-            build(slug, rows, dest, missing)
+            build(slug, rows, dest, missing, folder=folder, meta=catalog.get(slug))
         except Exception as exc:
             print(f"  FAILED: {exc}")
             failed.append(slug)

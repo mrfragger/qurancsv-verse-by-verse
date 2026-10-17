@@ -1,4 +1,4 @@
-downloading audio from quranenc.com for Quran <language>
+# downloading audio from quranenc.com for Quran <language>
 
 `download.py`
 
@@ -21,7 +21,7 @@ just need to change the language in two places in `files.json`
 
 `python3 download.py`
 
-and downloading Quranic Universal Audio (audio.qud.dev) verse timing and audio
+# downloading Quranic Universal Audio (audio.qud.dev) verse timing and audio
 
 `download_audio.py`
 

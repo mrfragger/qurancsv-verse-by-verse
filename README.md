@@ -48,11 +48,28 @@ abdulrahman_az_zawawi_way2quran                Abdulrahman Az-Zawawi  (Murattal,
 abdulwadood_haneef_mp3quran                    Abdulwadood Haneef  (Murattal, MP3Quran)  عبد الودود حنيف
 ```
 
+generate list of missing verses from the local catalog.json
+`python3 hf_to_release.py --report --show-ok > missingverses.txt`
+
+```
+abdulaziz_al_turki_yt                          AVOID  surahs 39,79                                                                                                                                                                                                                                               Abdulaziz Al-Turki
+abdulbasit_abdulsamad_warsh_qdc                AVOID  ayahs 6:163, 7:137, 8:43, 9:71, 14:2, 14:7, 14:12, 19:41 (+25 more)                                                                                                                                                                                        Abdulbasit Abdulsamad
+abdullah_al_qarafi_mp3quran                    AVOID  ayahs 22:66, 22:67, 22:68, 22:69, 22:70, 22:71, 22:72, 22:73 (+5 more)                                                                                                                                                                                     Abdullah Al-Qarafi
+abdur_rashid_sufi_shubah_qdc                   AVOID  ayahs 11:72, 26:194, 33:11, 36:2, 37:7, 37:152, 88:16, 88:17 (+9 more)                                                                                                                                                                                     Abdur-Rashid Sufi
+ahmed_deban_qalon_mp3quran                     AVOID  ayahs 7:137, 14:27, 18:33, 18:84, 20:87, 20:88, 26:46, 30:4 (+15 more)                                                                                                                                                                                     Ahmed Deban
+ahmed_khader_al_trabulsi_qalon_tvquran         AVOID  ayahs 6:163, 7:137, 8:43, 9:37, 9:71, 11:82, 14:2, 14:7 (+24 more)                                                                                                                                                                                         Ahmed Khader Al-Trabulsi
+```
+
+![missingverses.txt](missingverses.txt) (96 reciters, last updated 2026-10-16)
+
 ### download the verse timings and catalog with url links
 
 `python3 hf_to_release.py abdulmohsin_al_qasim_qdc`
 
 Those who don't wish to install duckdb, huggingface_hub, pyarrow to use `hf_to_release.py` and fear they might get throttled without a huggingface account can download all 96 reciters with verse timings.  Check catalog.json for missing verses, if any.
+
+![out.zip](out.zip) 7MB (96 reciters, last updated 2026-10-16) right click and save as
+
 
 ![out.zip](out.zip) 7MB (96 reciters, last updated 2026-10-16) right click and save as
 

@@ -69,6 +69,7 @@ ahmed_al_ajmi_qdc                              FILL   ayahs 26:21
 ahmed_issa_al_maasaraawi_mp3quran              FILL   ayahs 7:116, 41:15
 ahmed_kaseb_way2quran                          FILL   ayahs 37:179
 al_hussayni_al_azazy_kids_qdc                  FILL   ayahs 12:105, 21:72
+alaa_aqel_way2quran                            FILL   ayahs 34:50
 aziz_alili_qdc                                 FILL   ayahs 2:126
 hani_al_rifai_qdc_128k                         FILL   ayahs 1:1, 6:139
 kamel_al_bayli_warsh_way2quran                 FILL   ayahs 10:34

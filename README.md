@@ -29,7 +29,7 @@ just need to change the language in two places in `files.json`
 
 ### gives slug id and names of the reciter and so on
 
-`python3 hf_to_release.py --all > slugs_names.txt`
+`python3 hf_to_release.py --list > slugs_names.txt`
 
 ![slugs_names.txt](slugs_names.txt) (96 reciters, last updated 2026-10-16)
 
@@ -48,7 +48,13 @@ abdulrahman_az_zawawi_way2quran                Abdulrahman Az-Zawawi  (Murattal,
 abdulwadood_haneef_mp3quran                    Abdulwadood Haneef  (Murattal, MP3Quran)  عبد الودود حنيف
 ```
 
+
+download the catalog.json and verse_timestamps.json.gz for all reciters skipping already downloaded ones
+
+`python3 hf_to_release.py --all`
+
 generate list of missing verses from the local catalog.json
+
 `python3 hf_to_release.py --report --show-ok > missingverses.txt`
 
 ![missingverses.txt](missingverses.txt) (96 reciters, last updated 2026-10-16)

@@ -33,6 +33,7 @@ ahmed_talib_bin_humaid_mp3quran                Ahmed Talib bin Hameed  (Murattal
 akram_al_alaqmi_qdc                            Akram Al-Alaqmi  (Murattal, QuranicAudio)  أكرم العلاقمي
 al_dokali_mohammed_alaalim_qalon_mp3quran      Al-Dokali Mohammed Al-Aalim  (Qalon A'n Nafi', Murattal, MP3Quran, Studio)  الدوكالي محمد العالم
 al_hussayni_al_azazy_kids_qdc                  Al-Hussayni Al-Azazy  (Kids Repeat, QuranicAudio)  الحسيني العزازي
+alaa_aqel_way2quran                            Alaa Aqel  (Murattal, Way2Quran)  علاء عقل
 ali_al_huthaifi_mp3quran                       Ali Al-Huthaifi  (Murattal, MP3Quran, Studio)  علي بن عبد الرحمن الحذيفي
 ali_hajjaj_al_souasi_qdc                       Ali Hajjaj Al-Souasi  (Murattal, QuranicAudio)  علي حجاج السويسي
 aloyoon_al_koshi_warsh_mp3quran                Aloyoon Al-Koshi  (Warsh A'n Nafi', Murattal, MP3Quran)  العيون الكوشي

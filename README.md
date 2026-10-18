@@ -31,7 +31,7 @@ just need to change the language in two places in `files.json`
 
 `python3 hf_to_release.py --list > slugs_names.txt`
 
-![slugs_names.txt](slugs_names.txt) (96 reciters, last updated 2026-10-16)
+![slugs_names.txt](slugs_names.txt) (97 reciters, last updated 2026-10-18)
 
 output example
 ```
@@ -57,7 +57,7 @@ generate list of missing verses from the local catalog.json
 
 `python3 hf_to_release.py --report --show-ok > missingverses.txt`
 
-![missingverses.txt](missingverses.txt) (96 reciters, last updated 2026-10-16)
+![missingverses.txt](missingverses.txt) (97 reciters, last updated 2026-10-18)
 
 example
 ```
@@ -83,7 +83,7 @@ abdulbasit_abdulsamad_warsh_qdc                AVOID  ayahs 6:163, 7:137, 8:43, 
 abdullah_al_qarafi_mp3quran                    AVOID  ayahs 22:66, 22:67, 22:68, 22:69, 22:70, 22:71, 22:72, 22:73 (+5 more)
 ```
 
-### download the verse timings and catalog with url links
+### download the verse timings and catalog with url links.  After it's been published wait 12 hours for it to be available in the hugging face dataset.
 
 `python3 hf_to_release.py abdulmohsin_al_qasim_qdc`
 

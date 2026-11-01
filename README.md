@@ -31,7 +31,7 @@ just need to change the language in two places in `files.json`
 
 `python3 hf_to_release.py --list > slugs_names.txt`
 
-![slugs_names.txt](slugs_names.txt) (97 reciters, last updated 2026-10-18)
+![slugs_names.txt](slugs_names.txt) (108 reciters, last updated 2026-11-01)
 
 output example
 ```
@@ -57,7 +57,7 @@ generate list of missing verses from the local catalog.json
 
 `python3 hf_to_release.py --report --show-ok > missingverses.txt`
 
-![missingverses.txt](missingverses.txt) (97 reciters, last updated 2026-10-18)
+![missingverses.txt](missingverses.txt) (108 reciters, last updated 2026-11-01)
 
 example
 ```
@@ -89,7 +89,7 @@ abdullah_al_qarafi_mp3quran                    AVOID  ayahs 22:66, 22:67, 22:68,
 
 Those who don't wish to install duckdb, huggingface_hub, pyarrow to use `hf_to_release.py` and fear they might get throttled without a huggingface account can download all reciters with verse timings.
 
-![out.zip](out.zip) 7MB (97 reciters, last updated 2026-10-18) right click and save as
+![out.zip](out.zip) 7MB (108 reciters, last updated 2026-11-01) right click and save as
 
 ### download each surah mp3 and split each one into a verse
 

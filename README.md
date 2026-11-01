@@ -255,3 +255,148 @@ Make sure to have in the root dir (reciter subs generated with SubStitcher):
 - french/french_montada_v1.0.0-csv.1.csv
 - german/german_bubenheim_v1.1.4-csv.1.csv
 - etc.
+
+### Rename 121 language translations
+- there are 121 two or three-letter language codes
+- best to rename them to the full name of the Language after translation
+- translate for free with google translation GTX API (Free) and as of Nov 2026 doesn't seem to be a rate limit
+- used to be 977KB max limit for vtt subs but now seems up to 10MB works
+- https://tools.newzone.top/en/subtitle-translator
+- rename_vtt_langs.sh renames all of them
+
+### Common:
+- English
+- Chinese(Simplified)
+- Chinese(Traditional)
+- Spanish
+- French
+- German
+- Japanese
+- Korean
+- Hindi
+- Arabic
+- Russian
+- Portuguese(Brazil)
+- Portuguese(Portugal)
+- Indonesian
+- Vietnamese
+- Italian
+- Cantonese
+
+### Europe:
+- Romanian
+- Greek
+- Hungarian
+- Swedish
+- Czech
+- Catalan
+- Serbian
+- Bulgarian
+- Armenian
+- Danish
+- Albanian
+- Finnish
+- Norwegian
+- Slovak
+- Croatian
+- Belarusian
+- Sicilian
+- Georgian
+- Lombard
+- Lithuanian
+- Galician
+- Bosnian
+- Slovenian
+- Macedonian
+- Latvian
+- Estonian
+- Icelandic
+- Maltese
+- Welsh
+- Irish
+- Breton
+- Basque
+- Yiddish
+- Luxembourgish
+- Occitan
+- Latin
+- Esperanto
+- Ukrainian
+- Polish
+- Dutch
+
+### Middle East:
+- Turkish
+- Hebrew
+- Persian
+- Urdu
+- Pashto
+- Dari
+- Kurdish(Central)
+- Kurdish(Northern)
+
+### Central Asia:
+- Uzbek
+- Kazakh
+- Kyrgyz
+- Turkmen
+- Azerbaijani
+- Tajik
+- Mongolian
+- Bashkir
+- Tatar
+- Uyghur
+
+### South Asia:
+- Bengali
+- Marathi
+- Telugu
+- Tamil
+- Gujarati
+- Kannada
+- Punjabi
+- Malayalam
+- Bhojpuri
+- Maithili
+- Nepali
+- Sinhala
+- Assamese
+- Konkani
+- Sanskrit
+
+### Southeast Asia:
+- Thai
+- Lao
+- Burmese
+- Khmer
+- Malay
+- Filipino
+- Javanese
+- Sundanese
+- Acehnese
+- Pangasinan
+- Kapampangan
+- Cebuano
+
+### Africa:
+- Swahili
+- Hausa
+- Amharic
+- Igbo
+- Wolof
+- Xhosa
+- Zulu
+- Afrikaans
+- Oromo
+- Southern Sotho
+- Tswana
+- Tsonga
+- Malagasy
+- Lingala
+
+### Americas & Oceania:
+- Haitian Creole
+- Quechua
+- Aymara
+- Guarani
+- Maori

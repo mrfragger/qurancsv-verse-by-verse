@@ -5,8 +5,10 @@ abdulbasit_abdulsamad_mujawwad_tarteel         Abdulbasit Abdulsamad  (Mujawwad,
 abdulbasit_abdulsamad_tarteel                  Abdulbasit Abdulsamad  (Murattal, Tarteel CDN)  عبد الباسط عبد الصمد
 abdulbasit_abdulsamad_warsh_qdc                Abdulbasit Abdulsamad  (Warsh A'n Nafi', Murattal, QuranicAudio)  عبد الباسط عبد الصمد
 abdullah_al_buaijan_2025_yt                    Abdullah Al-Buaijan  (Murattal, YouTube, 2025, Studio)  عبد الله البعيجان
+abdullah_al_juhani_mp3quran                    Abdullah Awad Al-Juhani  (Murattal, MP3Quran)  عبد الله عواد الجهني
 abdullah_al_mattrod_qdc                        Abdullah Al-Mattrod  (Murattal, QuranicAudio)  عبد الله المطرود
 abdullah_al_qarafi_mp3quran                    Abdullah Al-Qarafi  (Murattal, MP3Quran)  عبد الله القرافي
+abdullah_ali_jabir_mp3quran                    Abdullah Ali Jabir  (Murattal, MP3Quran)  عبد الله علي جابر
 abdullah_basfar_qdc                            Abdullah Basfar  (Murattal, QuranicAudio)  عبد الله بصفر
 abdullah_kamel_way2quran                       Abdullah Kamel  (Murattal, Way2Quran)  عبد الله كامل
 abdulmohsin_al_qasim_qdc                       Abdulmohsin Al-Qasim  (Murattal, QuranicAudio)  عبد المحسن القاسم
@@ -19,7 +21,9 @@ abdur_rashid_sufi_shubah_qdc                   Abdur-Rashid Sufi  (Sho'bah A'n A
 abu_bakr_al_shatri_tarteel                     Abu Bakr Al-Shatri  (Murattal, Tarteel CDN)  أبو بكر الشاطري
 adel_al_karbalaei_archive_v2                   Adel Al-Karbalaei  (Murattal, Internet Archive)  عادل الکربلائي
 ahmad_naseem_ali_ahmad_2019_yt                 Ahmad Naseem Ali Ahmad  (Murattal, YouTube, 2019, Studio)  أحمد  نسيم على أحمد
+ahmed_abdurahman_darar_tvquran                 Ahmed Abdurahman Darar  (Murattal, tvQuran)  أحمد عبد الرحمن ضرار
 ahmed_al_ajmi_qdc                              Ahmed Al-Ajmi  (Murattal, QuranicAudio)  أحمد بن علي العجمي
+ahmed_al_swailem_mp3quran                      Ahmed Al-Suwailem  (Murattal, MP3Quran)  أحمد السويلم
 ahmed_amer_tvquran                             Ahmed Amer  (Murattal, tvQuran)  أحمد عامر
 ahmed_deban_qalon_mp3quran                     Ahmed Deban  (Qalon A'n Nafi', Murattal, MP3Quran)  أحمد ديبان
 ahmed_issa_al_maasaraawi_mp3quran              Ahmed Issa Al-Maasaraawi  (Murattal, MP3Quran)  أحمد عيسى المعصراوي
@@ -42,6 +46,7 @@ ayman_swed_muallim_yt                          Ayman Suwayd  (Muallim, YouTube) 
 aziz_alili_qdc                                 Aziz Alili  (Murattal, QuranicAudio)  عزيز عليلي
 badr_al_turki_yt                               Badr Al-Turki  (Murattal, YouTube)  بدر التركي
 bandar_baleela_qdc                             Bandar Baleela  (Murattal, QuranicAudio)  بندر بليلة
+fares_abbad_mp3quran                           Fares Abbad  (Murattal, MP3Quran)  فارس عباد
 fatih_seferagic_way2quran                      Fatih Seferagic  (Murattal, Way2Quran)  فاتح سفراجيك
 haitham_al_dukhain_mp3quran                    Haitham Al-Dukhain  (Murattal, MP3Quran)  هيثم الدخين
 hani_al_rifai_qdc_128k                         Hani Al-Rifai  (Murattal, QuranicAudio)  هاني الرفاعي
@@ -53,6 +58,7 @@ kamel_al_bayli_warsh_way2quran                 Kamel Al-Bayli  (Warsh A'n Nafi',
 khalid_al_mohana_drive                         Khalid Al-Mohana  (Murattal, Drive, Studio)  خالد المهنا
 khalid_al_qahtani_mp3quran                     Khalid Al-Qahtani  (Murattal, MP3Quran)  خالد القحطاني
 khalifa_al_tunaiji_tarteel                     Khalifa Al-Tunaiji  (Murattal, Tarteel CDN)  خليفة الطنيجي
+maher_al_muaiqly_mp3quran                      Maher Al-Muaiqly  (Murattal, MP3Quran)  ماهر المعيقلي
 maher_al_muaiqly_qdc                           Maher Al-Muaiqly  (Mujawwad, QuranicAudio)  ماهر المعيقلي
 maher_al_muaiqly_tarteel                       Maher Al-Muaiqly  (Murattal, Tarteel CDN)  ماهر المعيقلي
 mahmoud_abdul_hakam_mp3quran                   Mahmoud Abdul Hakam  (Murattal, MP3Quran)  محمود عبدالحكم
@@ -65,6 +71,7 @@ mishary_rashid_al_afasy_2008_qdc               Mishary Rashid Al-Afasy  (Muratta
 mishary_rashid_al_afasy_mp3quran               Mishary Rashid Al-Afasy  (Murattal, MP3Quran)  مشاري بن راشد العفاسي
 moaz_mahmoud_hamed_qalon_way2quran             Moaz Mahmoud Hamed  (Qalon A'n Nafi', Murattal, Way2Quran)  معاذ محمود حامد
 mohammed_abdulkareem_qdc                       Mohammed Abdulkareem  (Murattal, QuranicAudio)  محمد عبد الكريم
+mohammed_al_hudhaif_way2quran                  Mohammed Al-Hudhaif  (Murattal, Way2Quran)  محمد الحضيف
 mohammed_al_luhaidan_mp3quran                  Mohammed Al-Luhaidan  (Murattal, MP3Quran)  محمد اللحيدان
 mohammed_al_tablawi_qdc                        Mohammed Al-Tablawi  (Murattal, QuranicAudio)  محمد الطبلاوي
 mohammed_alghazali_archive                     Mohammed Al-Ghazali  (Murattal, Internet Archive)  محمد الغزالي
@@ -80,13 +87,17 @@ mustafa_ismail_mp3quran                        Mustafa Ismail  (Murattal, MP3Qur
 nabil_al_rifai_mp3quran                        Nabil Al-Rifai  (Murattal, MP3Quran)  نبيل الرفاعي
 nasser_al_qatami_mp3quran                      Nasser Al-Qatami  (Murattal, MP3Quran)  ناصر القطامي
 omar_al_qazabri_warsh_mp3quran                 Omar Al-Qazabri  (Warsh A'n Nafi', Murattal, MP3Quran)  عمر القزابري
+raad_al_kurdi_mp3quran                         Raad Al-Kurdi  (Murattal, MP3Quran)  رعد محمد الكردي
 saad_al_ghamdi_tarteel                         Saad Al-Ghamdi  (Murattal, Tarteel CDN)  سعد الغامدي
 saber_abdulhakam_qalon_way2quran               Saber Abdulhakam  (Qalon A'n Nafi', Murattal, Way2Quran)  صابر عبد الحكم
 saber_abdulhakam_shubah_way2quran              Saber Abdulhakam  (Sho'bah A'n Asim, Murattal, Way2Quran)  صابر عبد الحكم
 saber_abdulhakam_warsh_way2quran               Saber Abdulhakam  (Warsh A'n Nafi', Murattal, Way2Quran)  صابر عبد الحكم
 saber_abdulhakam_yt                            Saber Abdulhakam  (Murattal, YouTube, Studio)  صابر عبد الحكم
+sahl_yassin_mp3quran                           Sahl Yassin  (Murattal, MP3Quran)  سهل ياسين
+salah_al_budair_mp3quran                       Salah Al-Budair  (Murattal, MP3Quran)  صلاح البدير
 salah_al_budair_qdc                            Salah Al-Budair  (Murattal, QuranicAudio)  صلاح البدير
 saud_al_shuraim_mp3quran                       Saud Al-Shuraim  (Murattal, MP3Quran)  سعود الشريم
+tawfiq_as_sayegh_mp3quran                      Tawfiq As-Sayegh  (Murattal, MP3Quran)  توفيق الصايغ
 wadie_al_yamani_tvquran                        Wadie Al-Yamani  (Murattal, tvQuran)  وديع اليمني
 walid_al_naihi_qalon_mp3quran                  Walid Al-Naihi  (Qalon A'n Nafi', Murattal, MP3Quran)  وليد النائحي
 walid_atef_way2quran                           Walid Atef  (Murattal, Way2Quran)  وليد عاطف

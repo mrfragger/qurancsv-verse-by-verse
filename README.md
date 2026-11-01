@@ -89,13 +89,16 @@ abdullah_al_qarafi_mp3quran                    AVOID  ayahs 22:66, 22:67, 22:68,
 
 Those who don't wish to install duckdb, huggingface_hub, pyarrow to use `hf_to_release.py` and fear they might get throttled without a huggingface account can download all reciters with verse timings.
 
-![out.zip](out.zip) 7MB (96 reciters, last updated 2026-10-16) right click and save as
+![out.zip](out.zip) 7MB (97 reciters, last updated 2026-10-18) right click and save as
 
 ### download each surah mp3 and split each one into a verse
 
 this download_audio.py is slightly modified version from the original in that it has resuming support and checks for which verses are missing
 
 `python3 download_audio.py out/abdulmohsin_al_qasim_qdc/catalog.json --reciter abdulmohsin_al_qasim_qdc --format ayah`
+
+### download only a specific chapter to fill in missing ayah from another reciter. Say I'm missing 34:50 so I get chapter 34 only from a different reciter and paste in 034_054.mp3 and for multiple chapters just put 34,65,70
+`python3 download_audio.py out/wadie_al_yamani_tvquran/catalog.json --reciter wadie_al_yamani_tvquran --format ayah --chapters 34`
 
 # SubStitcher app handles everything below. Only kept for a legacy reference.
 

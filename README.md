@@ -31,8 +31,6 @@ just need to change the language in two places in `files.json`
 
 `python3 hf_to_release.py --list > slugs_names.txt`
 
-![slugs_names.txt](slugs_names.txt) (108 reciters, last updated 2026-11-01)
-
 output example
 ```
 abdulbasit_abdulsamad_warsh_qdc                Abdulbasit Abdulsamad  (Warsh A'n Nafi', Murattal, QuranicAudio)  عبد الباسط عبد الصمد
@@ -56,8 +54,6 @@ download the catalog.json and verse_timestamps.json.gz for all reciters skipping
 generate list of missing verses from the local catalog.json
 
 `python3 hf_to_release.py --report --show-ok > missingverses.txt`
-
-![missingverses.txt](missingverses.txt) (108 reciters, last updated 2026-11-01)
 
 example
 ```
@@ -83,17 +79,15 @@ abdulbasit_abdulsamad_warsh_qdc                AVOID  ayahs 6:163, 7:137, 8:43, 
 abdullah_al_qarafi_mp3quran                    AVOID  ayahs 22:66, 22:67, 22:68, 22:69, 22:70, 22:71, 22:72, 22:73 (+5 more)
 ```
 
-### download the verse timings and catalog with url links.  After it's been published wait 12 hours for it to be available in the hugging face dataset.
+### download the verse timings and catalog with url links.  After it's been published wait 24 to 48 hours for it to be available in the hugging face dataset as this is a appears to be a manual process
 
 `python3 hf_to_release.py abdulmohsin_al_qasim_qdc`
 
-Those who don't wish to install duckdb, huggingface_hub, pyarrow to use `hf_to_release.py` and fear they might get throttled without a huggingface account can download all reciters with verse timings.
-
-![out.zip](out.zip) 7MB (108 reciters, last updated 2026-11-01) right click and save as
+install duckdb, huggingface_hub, pyarrow to use `hf_to_release.py` 
 
 ### download each surah mp3 and split each one into a verse
 
-this download_audio.py is slightly modified version from the original in that it has resuming support and checks for which verses are missing
+this particular download_audio.py is slightly modified version from the original in that it has resuming support and checks for which verses are missing
 
 `python3 download_audio.py out/abdulmohsin_al_qasim_qdc/catalog.json --reciter abdulmohsin_al_qasim_qdc --format ayah`
 
@@ -255,6 +249,8 @@ Make sure to have in the root dir (reciter subs generated with SubStitcher):
 - french/french_montada_v1.0.0-csv.1.csv
 - german/german_bubenheim_v1.1.4-csv.1.csv
 - etc.
+
+# vtt sub translation not related to quran verse by verse
 
 ### Rename 121 language translations
 - there are 121 two or three-letter language codes

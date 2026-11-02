@@ -141,7 +141,7 @@ with their evil ones, they say, “We are certainly with you; we were only mocki
 - 24h 05m Tagalog - (Rowwad)
 - 19h 25m Vietnamese - (Rowwad)
 
-versebyversequran.zip 36 MB unzips to ~ 139 MB
+versebyversequran.zip 36 MB unzips to ~ 139 MB must get from SubStitcher repository
 
 contains 82 csv translations from quranenc.com as well as the 7 split csv files of the English Sahih International translation.
 - quran_saheeh001-006.csv

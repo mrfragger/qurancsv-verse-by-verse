@@ -259,6 +259,7 @@ Make sure to have in the root dir (reciter subs generated with SubStitcher):
 - used to be 977KB max limit for vtt subs but now seems up to 10MB works
 - https://tools.newzone.top/en/subtitle-translator
 - rename_vtt_langs.sh renames all of them
+- this bash script is no longer needed as of November 2026. Choose zip and {langName} and zh becomes Chinese
 - don't use for Quran or Hadith translations..only use official translations for those
 
 ### Common:

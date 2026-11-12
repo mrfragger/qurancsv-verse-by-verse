@@ -26,10 +26,16 @@ it is missing from most recordings. Warned reciters are still built unless
 Output goes to out/<slug>/{catalog.json,verse_timestamps.json.gz}; then:
 
     python download_audio.py out/<slug>/catalog.json --reciter <slug> --format ayah
+
+Set HF_TOKEN in the environment (a Hugging Face *access token*, not your
+password) so the gated dataset can be read:
+
+    export HF_TOKEN=hf_xxxxxxxxxxxxxxxxxxxx
 """
 import argparse
 import gzip
 import json
+import os
 import re
 import sys
 from pathlib import Path
@@ -38,6 +44,8 @@ REPO = "QUD-Technologies/quranic-universal-ayahs"
 COLS = "surah, ayah, duration_ms, source_url, source_offset_ms"
 NON_RECITER = {"mushafs"}
 OK_MISSING = {"1:1"}
+
+HF_TOKEN = os.environ.get("HF_TOKEN")
 
 # Verses per surah, Hafs / Kufan numbering (6,236 total, basmalah of surah 1 = 1:1).
 SURAH_COUNTS = [
@@ -52,6 +60,27 @@ assert len(SURAH_COUNTS) == 114 and sum(SURAH_COUNTS) == 6236
 # Riwayat that share this numbering. Warsh/Qalon number verses differently, so for
 # those we can only detect gaps and missing surahs, not a truncated tail.
 KUFAN = {"hafs_an_asim", "shubah_an_asim"}
+
+
+def _duckdb_connect():
+    """A DuckDB connection with the HF token registered as a secret, so that
+    hf:// reads of the gated dataset don't return 401."""
+    import duckdb
+
+    con = duckdb.connect()
+    if HF_TOKEN:
+        try:
+            con.execute(
+                "CREATE SECRET IF NOT EXISTS hf_token (TYPE HUGGINGFACE, TOKEN ?)",
+                [HF_TOKEN],
+            )
+        except Exception:
+            # older DuckDB: placeholder in DDL unsupported, fall back to literals
+            con.execute(
+                "CREATE SECRET IF NOT EXISTS hf_token (TYPE HUGGINGFACE, TOKEN '%s')"
+                % HF_TOKEN.replace("'", "''")
+            )
+    return con
 
 
 def parse_configs(configs: list) -> dict:
@@ -77,7 +106,7 @@ def parse_configs(configs: list) -> dict:
 def list_reciters() -> dict:
     from huggingface_hub import HfApi
 
-    info = HfApi().dataset_info(REPO)
+    info = HfApi(token=HF_TOKEN).dataset_info(REPO)
     cd = info.card_data
     configs = cd.to_dict().get("configs") if hasattr(cd, "to_dict") else cd.get("configs")
     return parse_configs(configs)
@@ -89,9 +118,8 @@ def fetch_catalog(url: str = f"hf://datasets/{REPO}/mushafs/all-*.parquet") -> d
     failure it returns {} so listing and building still work, just without names."""
     rows = None
     try:
-        import duckdb
-
-        cur = duckdb.connect().execute(f"SELECT * FROM '{url}'")
+        con = _duckdb_connect()
+        cur = con.execute(f"SELECT * FROM '{url}'")
         cols = [d[0] for d in cur.description]
         rows = [dict(zip(cols, r)) for r in cur.fetchall()]
     except Exception:
@@ -99,7 +127,7 @@ def fetch_catalog(url: str = f"hf://datasets/{REPO}/mushafs/all-*.parquet") -> d
             from huggingface_hub import HfFileSystem
             import pyarrow.parquet as pq
 
-            fs = HfFileSystem()
+            fs = HfFileSystem(token=HF_TOKEN)
             rows = []
             for p in sorted(fs.glob(url.replace("hf://", ""))):
                 with fs.open(p, "rb") as fh:
@@ -134,9 +162,7 @@ def describe(row) -> str:
 def fetch_rows(slug: str, folder: str, cols: str = COLS):
     """Rows for one reciter, selecting only the named (small) columns."""
     try:
-        import duckdb
-
-        con = duckdb.connect()
+        con = _duckdb_connect()
         pattern = f"hf://datasets/{REPO}/{folder}/{slug}-*.parquet"
         return con.execute(
             f"SELECT {cols} FROM '{pattern}' ORDER BY surah, ayah"
@@ -146,7 +172,7 @@ def fetch_rows(slug: str, folder: str, cols: str = COLS):
     from huggingface_hub import HfFileSystem
     import pyarrow.parquet as pq
 
-    fs = HfFileSystem()
+    fs = HfFileSystem(token=HF_TOKEN)
     paths = sorted(fs.glob(f"datasets/{REPO}/{folder}/{slug}-*.parquet"))
     if not paths:
         raise RuntimeError(f"no parquet shards found for {slug} in {folder}")
@@ -401,6 +427,10 @@ def main() -> int:
 
     if args.report:  # purely local: must run before anything touches the network
         return cmd_report(args)
+
+    if not HF_TOKEN:
+        print("warning: HF_TOKEN is not set; the dataset is gated and reads may fail "
+              "with 401. Export a Hugging Face access token first.", file=sys.stderr)
 
     reciters = list_reciters()
     if args.match:
